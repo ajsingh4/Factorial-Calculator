@@ -9,16 +9,36 @@
 #include <iostream>
 using namespace std;
 
-int factorial(int num){
-    if (num == 0){
-        return 1;
-    }
-    else{
-        return num * factorial(num - 1);
+#define NIL -1
+#define MAX 100
+
+int lookup[MAX];
+
+void initializeArray(){
+    for (int i=0; i<MAX; i++) {
+        lookup[i] = NIL;
     }
 }
 
+int factorial(int num){
+    if(lookup[num] == NIL){
+        if (num <= 1){
+            lookup[num] = num;
+        }
+        else{
+            lookup[num] = num * factorial(num - 1);
+        }
+    }
+    else if(lookup[num] != NIL){
+        return lookup[num];
+    }
+    return lookup[num];
+}
+
 int main() {
-    int total = factorial(5);
-    cout << total << endl;
+    initializeArray();
+    int factorialNum;
+    cout << "Please enter the number for which you would like the factorial calculated\n";
+    cin >> factorialNum;
+    cout << "The factorial value is " << factorial(factorialNum) << endl;
 }
